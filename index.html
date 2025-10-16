@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <title>Build An Aphrodite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Licorice&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">
+    <style>
+       html, body {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          width: 100vw;
+        }
+        *, *:before, *:after {
+          box-sizing: inherit;
+        }
+        #title {
+          width: 100vw;
+          text-align: center;
+          font-family: 'Marck Script', cursive; 
+          font-size: 2rem; 
+          background: #144ea5;
+          color: #fff;
+          padding: 24px 0;
+        }
+        .content-row {
+          display: flex;
+          width: 100vw;
+          min-height: 300px;
+        }
+        #main-aphrodite {
+          position: relative;
+          flex-basis: 66.6667%;
+          padding: 32px;
+          background: #d2e3fc;
+          border-right: 2px solid #cccccc;
+          min-height: 300px;
+          max-height: 600px;
+          text-align: center;
+          height: 500px; /* This controls your fixed image area */
+          overflow: hidden;
+        }
+        #customizations button {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1.1rem;
+  background: #4f8cff;
+  color: #fff;
+  border: 2.5px solid #2772db;
+  border-radius: 22px;
+  padding: 11px 28px;
+  margin: 10px 6px;
+  transition: none;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+#customizations button:hover,
+#customizations button:focus {
+  background: #2772db;
+  color: #fff;
+  border-color: #1a4d8f;
+  transition: none;
+}
+
+#customizations button:active {
+  background: #17478a;
+  color: #fff;
+  border-color: #1a4d8f;
+  transition: none;
+}
+#aphroditeImg, #bgImage {
+  position: absolute;
+  left: 0; 
+  top: 0; 
+  width: 100%; 
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  pointer-events: none;
+}
+#bgImage { z-index: 0; }
+#aphroditeImg { z-index: 1; }
+        #bgImage {
+          flex-basis: 66.6667%;
+          min-height: 300px;
+          max-height: 600px;
+          display: block;
+          margin: 0 auto;
+          z-index: 0;
+        }
+        #customizations {
+          flex-basis: 33.3333%;
+          padding: 32px;
+          background: #b0e3f2;
+          min-height: 300px;
+          text-align: center;
+        }
+        #about-section {
+          width: 100vw;
+          background: #436cc4;
+          padding: 32px;
+          min-height: 120px;
+          text-align: center;
+        }
+        @media (max-width: 900px) {
+          .content-row {
+            flex-direction: column;
+            width: 100vw;
+          }
+          #main-aphrodite, #customizations {
+            flex-basis: 100%;
+            width: 100vw;
+            border-right: none;
+            border-bottom: 2px solid #ccc;
+          }
+          #customizations {
+            border-bottom: none;
+          }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="title">
+        <h1>Build-An-Aphrodite</h1>
+    </div>
+    <div class="content-row">
+        <div id="main-aphrodite">
+            <img id="aphroditeImg" src="img/aphrodite1.png" alt="Aphrodite statue">
+            <img id="bgImage" src="img/bg1.jpg" alt="background">
+        </div>
+        <div id="customizations">
+            <button id="button1">change head</button>
+            <button id="button2">change pose</button>
+            <button id="button3">remove arms</button>
+            <button id="button4">add clothes</button>
+            <button id="button5">remove clothes</button>
+            <button id="button6">marble statue</button>
+            <button id="button7">bronze statue</button>
+            <button id="button8">random adjustment</button>
+            <button id="button9">change background</button>
+        </div>
+    </div>
+    <div id="about-section">
+        <h1>About The Game</h1><br>Using four of the more well-maintained Aphrodite statues seen on display at the Metropolitan Museum of Art, this game allows you to apply customizations to create the Aphrodite you desire to see. Throughout antiquity, the goddess of love was depicted in a variety of ways. In terms of the first known Aphrodite statue, scholars can only rely on written accounts from the likes of Lucian and other poets to understand what she might have looked at.
+    </div>
+    <script>
+        // Array of image sources
+        const aphroditeImages = [
+          "img/aphrodite1.png",
+          "img/aphrodite2.png",
+          "img/aphrodite3.png",
+          "img/aphrodite4.png"
+        ];
+        const bgImages = [
+            "img/bg1.jpg",
+            "img/bg2.jpg",
+            "img/bg3.jpg",
+            "img/bg4.jpg"
+        ];
+
+        // Function to randomly select a different image for button8
+        function randomAdjustment() {
+          const imgEl = document.getElementById("aphroditeImg");
+          const currentSrc = imgEl.getAttribute("src");
+          // Ensure robust comparison regardless of path style
+          const filteredImages = aphroditeImages.filter(src => !currentSrc.endsWith(src));
+          let newSrc;
+          if (filteredImages.length === 0) {
+            newSrc = currentSrc; // Only one image, do nothing
+          } else {
+            newSrc = filteredImages[Math.floor(Math.random() * filteredImages.length)];
+          }
+          imgEl.setAttribute("src", newSrc);
+        }
+
+        // Toggle function for button7: toggles between aphrodite2 and aphrodite3
+        function toggleBronzeStatue() {
+          const imgEl = document.getElementById("aphroditeImg");
+          const src = imgEl.getAttribute("src");
+          if (src.endsWith("img/aphrodite2.png")) {
+            imgEl.setAttribute("src", "img/aphrodite3.png");
+          } else if (src.endsWith("img/aphrodite3.png")) {
+            imgEl.setAttribute("src", "img/aphrodite2.png");
+          } else {
+            // If on any other image, pick randomly between the two
+            const options = [
+              "img/aphrodite2.png",
+              "img/aphrodite3.png"
+            ];
+            const newSrc = options[Math.floor(Math.random() * options.length)];
+            imgEl.setAttribute("src", newSrc);
+          }
+        }
+        
+        function marbleStatue() {
+          const imgEl = document.getElementById("aphroditeImg");
+          const src = imgEl.getAttribute("src");
+          const options = [
+            "img/aphrodite1.png",
+            "img/aphrodite4.png"
+          ];
+          // If already on one of them, switch to the other
+          if (src.endsWith(options[0])) {
+            imgEl.setAttribute("src", options[1]);
+          } else if (src.endsWith(options[1])) {
+            imgEl.setAttribute("src", options[0]);
+          } else {
+            // If on any other image, pick randomly between the two
+            const newSrc = options[Math.floor(Math.random() * options.length)];
+            imgEl.setAttribute("src", newSrc);
+          }
+        }
+
+        function nakedStatue() {
+          const imgEl = document.getElementById("aphroditeImg");
+          const src = imgEl.getAttribute("src");
+          const options = [
+            "img/aphrodite1.png",
+            "img/aphrodite2.png",
+            "img/aphrodite3.png"
+          ];
+          // If already on one of them, switch to the other
+          if (src.endsWith(options[0])) {
+            imgEl.setAttribute("src", options[1]);
+          } else if (src.endsWith(options[1])) {
+            imgEl.setAttribute("src", options[2]);
+          } else if (src.endsWith(options[2])) {
+            imgEl.setAttribute("src", options[0]);
+          } else {
+            // If on any other image, pick randomly between the two
+            const newSrc = options[Math.floor(Math.random() * options.length)];
+            imgEl.setAttribute("src", newSrc);
+          }
+        }
+
+        function dressedStatue() {
+          const imgEl = document.getElementById("aphroditeImg");
+          const src = imgEl.getAttribute("src");
+          const newSrc = "img/aphrodite4.png"; 
+          imgEl.setAttribute("src", newSrc);
+        }
+
+        function statueArms() {
+          const imgEl = document.getElementById("aphroditeImg");
+          const src = imgEl.getAttribute("src");
+          const options = [
+            "img/aphrodite1.png",
+            "img/aphrodite2.png",
+            "img/aphrodite4.png"
+          ];
+          // If already on one of them, switch to the other
+          if (src.endsWith(options[0])) {
+            imgEl.setAttribute("src", options[1]);
+          } else if (src.endsWith(options[1])) {
+            imgEl.setAttribute("src", options[2]);
+          } else if (src.endsWith(options[2])) {
+            imgEl.setAttribute("src", options[0]);
+          } else {
+            // If on any other image, pick randomly between the two
+            const newSrc = options[Math.floor(Math.random() * options.length)];
+            imgEl.setAttribute("src", newSrc);
+          }
+        }
+
+        let currentBgIndex = 0;
+        function nextBackground() {
+            const bgImgEl = document.getElementById("bgImage");
+            currentBgIndex = (currentBgIndex + 1) % bgImages.length;
+            bgImgEl.setAttribute("src", bgImages[currentBgIndex]);
+        }
+
+        // Example placeholder functions for other buttons
+        function notImplementedAlert(feature) {
+          alert(feature + " feature is not yet implemented.");
+        }
+
+        // Add event listeners immediately, since script is placed after DOM
+        const button9 = document.getElementById("button9");
+        button9.addEventListener("click", nextBackground);
+        
+        const button8 = document.getElementById("button8");
+        button8.addEventListener("click", randomAdjustment);
+
+        const button7 = document.getElementById("button7");
+        button7.addEventListener("click", toggleBronzeStatue);
+
+        const button6 = document.getElementById("button6");
+        button6.addEventListener("click", marbleStatue);
+
+        const button5 = document.getElementById("button5");
+        button5.addEventListener("click", nakedStatue);
+
+        const button4 = document.getElementById("button4");
+        button4.addEventListener("click", dressedStatue);
+
+        const button3 = document.getElementById("button3");
+        button3.addEventListener("click", statueArms);
+
+        const button2 = document.getElementById("button2");
+        button2.addEventListener("click", randomAdjustment);
+
+        const button1 = document.getElementById("button1");
+        button1.addEventListener("click", randomAdjustment);
+
+        // Optional: placeholder alerts for unimplemented buttons
+        document.getElementById("button1").addEventListener("click", () => notImplementedAlert("Change head"));
+        document.getElementById("button2").addEventListener("click", () => notImplementedAlert("Change pose"));
+        document.getElementById("button3").addEventListener("click", () => notImplementedAlert("Remove arms"));
+        document.getElementById("button4").addEventListener("click", () => notImplementedAlert("Add clothes"));
+    </script>
+</body>
+</html>
